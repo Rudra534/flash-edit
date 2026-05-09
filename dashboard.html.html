@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Flash Edit</title>
+
+  <style>
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:linear-gradient(to bottom,#000,#111);
+      color:white;
+    }
+
+    .navbar{
+      background:#111;
+      padding:20px 40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid #333;
+    }
+
+    .logo{
+      color:#facc15;
+      font-size:30px;
+      font-weight:bold;
+    }
+
+    .nav-right a{
+      color:white;
+      text-decoration:none;
+      margin-left:25px;
+    }
+
+    .nav-right a:hover{
+      color:#facc15;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+      padding:50px 20px;
+    }
+
+    .welcome{
+      font-size:50px;
+      margin-bottom:40px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+      gap:25px;
+    }
+
+    .card{
+      background:#111;
+      border:1px solid #333;
+      border-radius:22px;
+      padding:30px;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      border-color:#facc15;
+      transform:translateY(-5px);
+    }
+
+    .card h2{
+      color:#facc15;
+      margin-top:0;
+    }
+
+    input, textarea{
+      width:100%;
+      padding:15px;
+      margin-top:15px;
+      border:none;
+      border-radius:12px;
+      background:#222;
+      color:white;
+      font-size:15px;
+      box-sizing:border-box;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      margin-top:20px;
+      border:none;
+      border-radius:12px;
+      background:#facc15;
+      color:black;
+      font-size:17px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.02);
+    }
+
+    .editor{
+      background:black;
+      border:1px solid #333;
+      padding:20px;
+      border-radius:16px;
+      margin-top:15px;
+    }
+
+    .editor h3{
+      margin-top:0;
+      color:#facc15;
+    }
+
+    .chatbox{
+      background:black;
+      border:1px solid #333;
+      border-radius:16px;
+      padding:20px;
+      height:250px;
+      overflow-y:auto;
+      margin-top:20px;
+    }
+
+    .yellow{
+      color:#facc15;
+      font-weight:bold;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <div class="navbar">
+
+    <div class="logo">
+      Flash Edit ⚡
+    </div>
+
+    <div class="nav-right">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="pricing.html">
+        Pricing
+      </a>
+
+      <a href="login.html">
+        Logout
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- MAIN -->
+
+  <div class="container">
+
+    <div class="welcome">
+      👋 Welcome Back
+    </div>
+
+    <div class="grid">
+
+      <!-- PROJECT CARD -->
+
+      <div class="card">
+
+        <h2>
+          📂 Create Project
+        </h2>
+
+        <input type="text"
+          placeholder="Project Title">
+
+        <textarea
+          placeholder="Describe editing style"></textarea>
+
+        <input type="text"
+          placeholder="Paste Google Drive Link">
+
+        <button>
+          Post Project
+        </button>
+
+      </div>
+
+      <!-- CHAT -->
+
+      <div class="card">
+
+        <h2>
+          💬 Internal Chat
+        </h2>
+
+        <div class="chatbox">
+
+          <p class="yellow">
+            Editor #21
+          </p>
+
+          <p>
+            I can deliver cinematic reel within 24 hours ⚡
+          </p>
+
+          <br>
+
+          <p class="yellow">
+            You
+          </p>
+
+          <p>
+            Need subtitles and smooth transitions.
+          </p>
+
+        </div>
+
+        <input type="text"
+          placeholder="Type message">
+
+      </div>
+
+      <!-- EDITORS -->
+
+      <div class="card">
+
+        <h2>
+          🎬 Recommended Editors
+        </h2>
+
+        <div class="editor">
+
+          <h3>
+            Cinematic Editor #21
+          </h3>
+
+          <p>
+            Reels • Telugu • Cinematic
+          </p>
+
+          <button>
+            Start Chat
+          </button>
+
+        </div>
+
+        <div class="editor">
+
+          <h3>
+            Pro Reel Editor #09
+          </h3>
+
+          <p>
+            YouTube • Ads • Trendy Reels
+          </p>
+
+          <button>
+            Start Chat
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

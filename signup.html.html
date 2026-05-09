@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup - Flash Edit</title>
+
+  <style>
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:linear-gradient(to bottom,#000,#111);
+      color:white;
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .box{
+      width:400px;
+      background:#111;
+      padding:40px;
+      border-radius:22px;
+      border:1px solid #333;
+      box-shadow:0 0 20px rgba(255,204,21,0.1);
+    }
+
+    h1{
+      text-align:center;
+      color:#facc15;
+      font-size:42px;
+      margin-bottom:10px;
+    }
+
+    p{
+      text-align:center;
+      color:#aaa;
+      margin-bottom:30px;
+    }
+
+    input, select{
+      width:100%;
+      padding:15px;
+      margin-top:15px;
+      border:none;
+      border-radius:12px;
+      background:#222;
+      color:white;
+      font-size:16px;
+      box-sizing:border-box;
+    }
+
+    select{
+      cursor:pointer;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      margin-top:25px;
+      border:none;
+      border-radius:12px;
+      background:#facc15;
+      color:black;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.02);
+    }
+
+    .bottom{
+      text-align:center;
+      margin-top:20px;
+      color:#888;
+    }
+
+    a{
+      color:#facc15;
+      text-decoration:none;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="box">
+
+    <h1>
+      Flash Edit ⚡
+    </h1>
+
+    <p>
+      Create your account
+    </p>
+
+    <input type="text"
+      placeholder="Full Name">
+
+    <input type="email"
+      placeholder="Email Address">
+
+    <input type="password"
+      placeholder="Password">
+
+    <select>
+
+      <option>
+        Select Role
+      </option>
+
+      <option>
+        Client
+      </option>
+
+      <option>
+        Editor
+      </option>
+
+    </select>
+
+    <button
+      onclick="window.location.href='dashboard.html'">
+
+      Create Account
+
+    </button>
+
+    <div class="bottom">
+
+      Already have an account?
+
+      <a href="login.html">
+        Login
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

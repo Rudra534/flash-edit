@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pricing - Flash Edit</title>
+
+  <style>
+
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:linear-gradient(to bottom,#000,#111);
+      color:white;
+    }
+
+    .navbar{
+      background:#111;
+      padding:20px 40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:1px solid #333;
+    }
+
+    .logo{
+      color:#facc15;
+      font-size:30px;
+      font-weight:bold;
+    }
+
+    .nav-links a{
+      color:white;
+      text-decoration:none;
+      margin-left:25px;
+    }
+
+    .nav-links a:hover{
+      color:#facc15;
+    }
+
+    .hero{
+      text-align:center;
+      padding:80px 20px 40px;
+    }
+
+    .hero h1{
+      font-size:65px;
+      color:#facc15;
+      margin:0;
+    }
+
+    .hero p{
+      color:#aaa;
+      margin-top:20px;
+      font-size:22px;
+    }
+
+    .plans{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:25px;
+      max-width:1200px;
+      margin:auto;
+      padding:40px 20px 80px;
+    }
+
+    .card{
+      background:#111;
+      border:1px solid #333;
+      border-radius:22px;
+      padding:35px;
+      transition:0.3s;
+    }
+
+    .card:hover{
+      transform:translateY(-6px);
+      border-color:#facc15;
+    }
+
+    .highlight{
+      border:2px solid #facc15;
+    }
+
+    .card h2{
+      color:#facc15;
+      margin-top:0;
+      font-size:30px;
+    }
+
+    .price{
+      font-size:50px;
+      font-weight:bold;
+      margin:20px 0;
+    }
+
+    ul{
+      padding-left:20px;
+      line-height:2;
+      color:#bbb;
+    }
+
+    button{
+      width:100%;
+      padding:15px;
+      margin-top:25px;
+      border:none;
+      border-radius:12px;
+      background:#facc15;
+      color:black;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
+    }
+
+    button:hover{
+      transform:scale(1.02);
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+
+  <div class="navbar">
+
+    <div class="logo">
+      Flash Edit ⚡
+    </div>
+
+    <div class="nav-links">
+
+      <a href="index.html">
+        Home
+      </a>
+
+      <a href="login.html">
+        Login
+      </a>
+
+      <a href="signup.html">
+        Signup
+      </a>
+
+    </div>
+
+  </div>
+
+  <!-- HERO -->
+
+  <div class="hero">
+
+    <h1>
+      Pricing Plans
+    </h1>
+
+    <p>
+      Choose the best subscription for your editing workflow
+    </p>
+
+  </div>
+
+  <!-- PLANS -->
+
+  <div class="plans">
+
+    <!-- DAY -->
+
+    <div class="card">
+
+      <h2>
+        ⚡ One Day
+      </h2>
+
+      <div class="price">
+        ₹299
+      </div>
+
+      <ul>
+        <li>1 Project Access</li>
+        <li>Internal Chat</li>
+        <li>24 Hours Access</li>
+        <li>Basic Editor Matching</li>
+      </ul>
+
+      <button
+        onclick="window.location.href='dashboard.html'">
+
+        Buy Now
+
+      </button>
+
+    </div>
+
+    <!-- WEEK -->
+
+    <div class="card highlight">
+
+      <h2>
+        🔥 One Week
+      </h2>
+
+      <div class="price">
+        ₹999
+      </div>
+
+      <ul>
+        <li>Unlimited Projects</li>
+        <li>Priority Editors</li>
+        <li>Unlimited Chat</li>
+        <li>7 Days Access</li>
+      </ul>
+
+      <button
+        onclick="window.location.href='dashboard.html'">
+
+        Buy Now
+
+      </button>
+
+    </div>
+
+    <!-- MONTH -->
+
+    <div class="card">
+
+      <h2>
+        🚀 One Month
+      </h2>
+
+      <div class="price">
+        ₹3999
+      </div>
+
+      <ul>
+        <li>Premium Editors</li>
+        <li>Unlimited Projects</li>
+        <li>Fast Matching</li>
+        <li>30 Days Access</li>
+      </ul>
+
+      <button
+        onclick="window.location.href='dashboard.html'">
+
+        Buy Now
+
+      </button>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

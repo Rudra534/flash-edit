@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Flash Edit Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+
+margin:0;
+
+font-family:'Roboto',sans-serif;
+
+background:#0f0f0f;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+color:white;
+
+overflow:hidden;
+
+}
+
+/* BACKGROUND */
+
+.bg{
+
+position:fixed;
+
+inset:0;
+
+background-image:url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+
+background-position:center;
+
+filter:blur(10px);
+
+opacity:0.25;
+
+z-index:-1;
+
+}
+
+/* LOGIN BOX */
+
+.box{
+
+width:380px;
+
+background:#181818;
+
+border:1px solid #272727;
+
+padding:40px;
+
+border-radius:28px;
+
+box-shadow:
+0 0 40px rgba(0,0,0,0.5);
+
+}
+
+/* LOGO */
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:12px;
+
+font-size:32px;
+
+font-weight:900;
+
+margin-bottom:30px;
+
+}
+
+.logo img{
+
+width:45px;
+
+height:45px;
+
+object-fit:contain;
+
+}
+
+/* INPUTS */
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-top:16px;
+
+background:#121212;
+
+border:1px solid #333;
+
+border-radius:16px;
+
+color:white;
+
+outline:none;
+
+font-size:15px;
+
+}
+
+input:focus{
+
+border-color:#ff0000;
+
+}
+
+/* BUTTON */
+
+button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:24px;
+
+background:#ff0000;
+
+border:none;
+
+border-radius:18px;
+
+color:white;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+button:hover{
+
+background:#cc0000;
+
+}
+
+/* TEXT */
+
+.bottom{
+
+text-align:center;
+
+margin-top:22px;
+
+color:#aaaaaa;
+
+}
+
+.bottom a{
+
+color:#ff0000;
+
+text-decoration:none;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="box">
+
+<div class="logo">
+
+<img
+src="images/logo.png">
+
+Flash Edit
+
+</div>
+
+<input
+type="email"
+id="email"
+placeholder="Enter Email">
+
+<input
+type="password"
+id="password"
+placeholder="Enter Password">
+
+<button id="loginBtn">
+
+Login
+
+</button>
+
+<div class="bottom">
+
+Don’t have account?
+
+<a href="signup.html">
+
+Signup
+
+</a>
+
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getAuth,
+signInWithEmailAndPassword
+
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+getFirestore,
+doc,
+getDoc
+
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* FIREBASE CONFIG */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNBmJcZ8qLYbVKTOrd5VgxKeRq0WRGlRs",
+
+authDomain: "flash-edit.firebaseapp.com",
+
+projectId: "flash-edit",
+
+storageBucket: "flash-edit.firebasestorage.app",
+
+messagingSenderId: "568937013589",
+
+appId: "1:568937013589:web:dd4e2d926e2790b0f88fdc",
+
+measurementId: "G-CBJTZMYKKL"
+
+};
+
+/* INIT */
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+/* LOGIN BUTTON */
+
+const loginBtn =
+document.getElementById("loginBtn");
+
+loginBtn.addEventListener("click",async()=>{
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+/* EMPTY CHECK */
+
+if(email === "" || password === ""){
+
+alert("Please fill all fields");
+
+return;
+
+}
+
+try{
+
+/* LOGIN */
+
+const userCredential =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user = userCredential.user;
+
+/* GET USER ROLE */
+
+const userDoc =
+await getDoc(
+doc(db,"users",user.uid)
+);
+
+if(userDoc.exists()){
+
+const data = userDoc.data();
+
+/* CLIENT */
+
+if(data.role === "client"){
+
+window.location.href =
+"client-dashboard.html";
+
+}
+
+/* EDITOR */
+
+else if(data.role === "editor"){
+
+window.location.href =
+"editor-dashboard.html";
+
+}
+
+/* NO ROLE */
+
+else{
+
+alert("No role found");
+
+}
+
+}
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

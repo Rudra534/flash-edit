@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flash Edit</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+--bg:#0f0f0f;
+--card:#181818;
+--border:#272727;
+--text:#ffffff;
+--subtext:#aaaaaa;
+--accent:#ff0000;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:'Roboto',sans-serif;
+background:var(--bg);
+color:var(--text);
+overflow-x:hidden;
+}
+
+a{
+text-decoration:none;
+}
+
+#intro{
+position:fixed;
+inset:0;
+background:#ffffff;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+z-index:99999;
+animation:fadeOut 1s ease forwards;
+animation-delay:3s;
+}
+
+.intro-logo{
+width:760px;
+height:760px;
+object-fit:contain;
+animation:zoomIn 1.5s ease;
+}
+
+#intro h1{
+margin-top:20px;
+font-size:52px;
+font-weight:900;
+letter-spacing:1px;
+}
+
+@keyframes zoomIn{
+0%{transform:scale(0);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+@keyframes fadeOut{
+to{opacity:0;visibility:hidden;}
+}
+
+.navbar{
+height:75px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+padding:0 25px;
+background:var(--bg);
+border-bottom:1px solid var(--border);
+position:sticky;
+top:0;
+z-index:100;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:30px;
+font-weight:900;
+color:white;
+white-space:nowrap;
+}
+
+.logo-img{
+width:70px;
+height:70px;
+object-fit:contain;
+}
+
+.search{
+width:40%;
+display:flex;
+}
+
+.search input{
+width:100%;
+padding:13px;
+background:#121212;
+border:1px solid #333;
+border-radius:30px 0 0 30px;
+color:white;
+outline:none;
+}
+
+.search button{
+padding:13px 20px;
+background:#222;
+border:none;
+color:white;
+border-radius:0 30px 30px 0;
+cursor:pointer;
+}
+
+.language-switch{
+display:flex;
+gap:8px;
+padding:6px;
+background:#121212;
+border:1px solid #333;
+border-radius:16px;
+}
+
+.language-switch button,
+.language-choice button{
+border:none;
+cursor:pointer;
+font-weight:700;
+color:white;
+background:#272727;
+border-radius:12px;
+}
+
+.language-switch button{
+padding:9px 12px;
+}
+
+.language-switch button.active,
+.language-choice button.active{
+background:var(--accent);
+}
+
+.language-modal{
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:rgba(0,0,0,0.75);
+z-index:9999;
+}
+
+.language-modal.active{
+display:flex;
+}
+
+.language-dialog{
+width:min(460px,100%);
+background:var(--card);
+border:1px solid var(--border);
+border-radius:24px;
+padding:28px;
+text-align:center;
+box-shadow:0 24px 70px rgba(0,0,0,0.5);
+}
+
+.language-dialog h2{
+font-size:30px;
+margin-bottom:12px;
+}
+
+.language-dialog p{
+color:var(--subtext);
+line-height:1.6;
+margin-bottom:22px;
+}
+
+.language-choice{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.language-choice button{
+padding:15px;
+font-size:16px;
+}
+
+.nav-buttons,
+.hero-buttons{
+display:flex;
+gap:14px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:14px 26px;
+border-radius:16px;
+font-weight:700;
+transition:0.3s;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
+.login-btn{
+background:var(--card);
+border:1px solid #333;
+color:white;
+}
+
+.login-btn:hover{
+background:#272727;
+}
+
+.start-btn{
+background:var(--accent);
+color:white;
+box-shadow:0 0 20px rgba(255,0,0,0.35);
+}
+
+.start-btn:hover{
+transform:translateY(-3px);
+background:#d90000;
+}
+
+.hero{
+min-height:90vh;
+background-image:url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1600&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+position:relative;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:30px;
+}
+
+.hero::before{
+content:"";
+position:absolute;
+inset:0;
+background:rgba(0,0,0,0.7);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:850px;
+}
+
+.hero h1{
+font-size:68px;
+font-weight:900;
+margin-bottom:20px;
+line-height:1.1;
+}
+
+.hero span,
+.hero strong{
+color:var(--accent);
+}
+
+.hero p{
+font-size:22px;
+line-height:1.7;
+color:#ddd;
+margin-bottom:35px;
+}
+
+.hero-buttons{
+justify-content:center;
+gap:20px;
+}
+
+.benefits,
+.editor-section,
+.client-section,
+.projects-showcase,
+.signup-fee{
+padding:90px 30px;
+}
+
+.benefits h2,
+.projects-showcase h2,
+.signup-fee h2{
+text-align:center;
+font-size:42px;
+margin-bottom:40px;
+}
+
+.benefits-grid,
+.project-grid,
+.fee-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:30px;
+max-width:1180px;
+margin:0 auto;
+}
+
+.benefit-card,
+.project-card,
+.fee-card{
+background:var(--card);
+padding:22px;
+border-radius:24px;
+border:1px solid var(--border);
+}
+
+.benefit-card img{
+width:100%;
+height:220px;
+object-fit:cover;
+border-radius:18px;
+margin-bottom:20px;
+}
+
+.benefit-card h3,
+.project-card h3,
+.fee-card h3{
+font-size:22px;
+margin-bottom:12px;
+}
+
+.benefit-card p,
+.project-card p,
+.fee-card p,
+.editor-content p,
+.client-content p{
+color:var(--subtext);
+line-height:1.7;
+}
+
+.project-card{
+position:relative;
+overflow:hidden;
+}
+
+.project-card img{
+width:100%;
+height:190px;
+object-fit:cover;
+border-radius:18px;
+margin-bottom:18px;
+}
+
+.project-meta{
+display:flex;
+justify-content:space-between;
+gap:12px;
+margin-bottom:14px;
+color:white;
+font-weight:700;
+}
+
+.project-budget{
+color:var(--accent);
+}
+
+.project-tag{
+display:inline-block;
+padding:8px 12px;
+border-radius:30px;
+background:#272727;
+color:white;
+font-size:13px;
+margin-bottom:12px;
+}
+
+.signup-fee{
+background:#111;
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
+}
+
+.signup-fee h2{
+margin-bottom:18px;
+}
+
+.signup-copy{
+max-width:760px;
+margin:0 auto 36px;
+text-align:center;
+color:var(--subtext);
+font-size:18px;
+line-height:1.7;
+}
+
+.fee-card strong{
+display:block;
+font-size:34px;
+color:var(--accent);
+margin-bottom:10px;
+}
+
+.signup-cta{
+display:flex;
+justify-content:center;
+margin-top:32px;
+}
+
+.editor-content,
+.client-content{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+gap:40px;
+align-items:center;
+max-width:1180px;
+margin:0 auto;
+}
+
+.editor-content h2,
+.client-content h2{
+font-size:42px;
+margin-bottom:16px;
+}
+
+.editor-content img,
+.client-content img{
+width:100%;
+height:420px;
+object-fit:cover;
+border-radius:24px;
+}
+
+.section-list{
+margin:20px 0;
+line-height:2;
+list-style:none;
+color:white;
+}
+
+.featured{
+border:2px solid var(--accent);
+transform:scale(1.05);
+}
+
+footer{
+padding:40px;
+text-align:center;
+background:#111;
+border-top:1px solid var(--border);
+}
+
+footer h2{
+margin-bottom:10px;
+}
+
+footer p{
+color:var(--subtext);
+}
+
+@media(max-width:900px){
+.navbar{
+height:auto;
+min-height:75px;
+padding:12px 15px;
+align-items:center;
+}
+
+.search{
+display:none;
+}
+
+.language-switch{
+order:3;
+}
+
+.logo{
+font-size:24px;
+}
+
+.logo-img{
+width:55px;
+height:55px;
+}
+
+.nav-buttons{
+gap:8px;
+}
+
+.btn{
+padding:12px 18px;
+font-size:14px;
+}
+
+.hero{
+min-height:70vh;
+padding:30px 18px;
+}
+
+.hero h1{
+font-size:42px;
+}
+
+.hero p{
+font-size:18px;
+}
+
+.benefits,
+.editor-section,
+.client-section,
+.projects-showcase,
+.signup-fee{
+padding:60px 18px;
+}
+
+.benefits h2,
+.projects-showcase h2,
+.signup-fee h2,
+.editor-content h2,
+.client-content h2{
+font-size:34px;
+}
+
+.editor-content img,
+.client-content img{
+height:300px;
+}
+
+.featured{
+transform:none;
+}
+}
+</style>
+</head>
+
+<body>
+<div id="intro">
+<img src="images/logo.png" class="intro-logo" alt="Flash Edit logo">
+<h1>Flash Edit</h1>
+</div>
+
+<div class="language-modal" id="languageModal" aria-hidden="true">
+<div class="language-dialog">
+<h2 data-i18n="languageTitle">Choose Your Language</h2>
+<p data-i18n="languageText">Select Telugu or English to understand Flash Edit easily.</p>
+<div class="language-choice">
+<button type="button" class="language-btn active" data-lang="en">English</button>
+<button type="button" class="language-btn" data-lang="te">తెలుగు</button>
+</div>
+</div>
+</div>
+
+<div class="navbar">
+<div class="logo">
+<img src="images/logo.png" class="logo-img" alt="Flash Edit logo">
+Flash Edit
+</div>
+
+<div class="search">
+<input type="text" placeholder="Search videos" data-placeholder-en="Search videos" data-placeholder-te="వీడియోలు వెతకండి">
+<button data-i18n="search">Search</button>
+</div>
+
+<div class="language-switch">
+<button type="button" class="language-btn active" data-lang="en">EN</button>
+<button type="button" class="language-btn" data-lang="te">TE</button>
+</div>
+
+<div class="nav-buttons">
+<a href="login.html" class="btn login-btn" data-i18n="login">Login</a>
+<a href="signup.html" class="btn start-btn" data-i18n="getStarted">Get Started</a>
+</div>
+</div>
+
+<main>
+<section class="hero">
+<div class="hero-content">
+<h1 data-i18n-html="heroTitle">India's Creator Editing <strong>Marketplace</strong></h1>
+<p data-i18n="heroText">Connect clients and professional editors in one powerful platform.</p>
+<div class="hero-buttons">
+<a href="signup.html" class="btn start-btn" data-i18n="freeSignup">Free Sign Up</a>
+<a href="login.html" class="btn login-btn" data-i18n="hireEditors">Hire Editors</a>
+</div>
+</div>
+</section>
+
+<section class="benefits">
+<h2 data-i18n="whyTitle">Why Flash Edit?</h2>
+<div class="benefits-grid">
+<div class="benefit-card">
+<img src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?q=80&w=1200&auto=format&fit=crop" alt="Professional video editing setup">
+<h3 data-i18n="benefitEditorsTitle">Professional Video Editors</h3>
+<p data-i18n="benefitEditorsText">Find cinematic editors for reels, YouTube, ads, weddings and short films.</p>
+</div>
+
+<div class="benefit-card">
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Team working on a secure project">
+<h3 data-i18n="benefitSecureTitle">Secure Marketplace</h3>
+<p data-i18n="benefitSecureText">Admin approval and payment verification keep project handling organized.</p>
+</div>
+
+<div class="benefit-card">
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="Live collaboration workspace">
+<h3 data-i18n="benefitChatTitle">Live Chat Collaboration</h3>
+<p data-i18n="benefitChatText">Clients and editors collaborate through real-time chat and drive sharing.</p>
+</div>
+</div>
+</section>
+
+<section class="editor-section">
+<div class="editor-content">
+<div>
+<h2 data-i18n="editorsTitle">For Editors</h2>
+<p data-i18n="editorsText">Get high-paying editing projects from creators, businesses and influencers.</p>
+<ul class="section-list">
+<li data-i18n="editorPoint1">Free signup to explore available client projects</li>
+<li data-i18n="editorPoint2">Unlimited editing projects</li>
+<li data-i18n="editorPoint3">Payment verified clients</li>
+<li data-i18n="editorPoint4">Secure project workflow</li>
+<li data-i18n="editorPoint5">Real-time project management</li>
+</ul>
+<a href="signup.html" class="btn start-btn" data-i18n="signupFree">Sign Up Free</a>
+</div>
+<img src="https://images.unsplash.com/photo-1574717024453-354056e1b1fc?q=80&w=1200&auto=format&fit=crop" alt="Editor working on a timeline">
+</div>
+</section>
+
+<section class="client-section">
+<div class="client-content">
+<img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=1200&auto=format&fit=crop" alt="Client team planning content">
+<div>
+<h2 data-i18n="clientsTitle">For Clients</h2>
+<p data-i18n="clientsText">Hire talented editors for reels, YouTube videos, ads, podcasts and social content.</p>
+<ul class="section-list">
+<li data-i18n="clientPoint1">Verified editors</li>
+<li data-i18n="clientPoint2">Fast project delivery</li>
+<li data-i18n="clientPoint3">Secure admin workflow</li>
+<li data-i18n="clientPoint4">Direct project collaboration</li>
+</ul>
+<a href="signup.html" class="btn start-btn" data-i18n="signupFree">Sign Up Free</a>
+</div>
+</div>
+</section>
+
+<section class="projects-showcase">
+<h2 data-i18n="projectsTitle">Client Projects Waiting For Editors</h2>
+<div class="project-grid">
+<div class="project-card">
+<img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=1200&auto=format&fit=crop" alt="Cinematic reel editing project">
+<span class="project-tag" data-i18n="projectTag1">Reels Editing</span>
+<div class="project-meta">
+<span data-i18n="projectName1">Cinematic brand reel</span>
+<span class="project-budget">Rs.4,500</span>
+</div>
+<p data-i18n="projectText1">Color grading, sharp cuts, captions and music sync for a creator campaign.</p>
+</div>
+
+<div class="project-card featured">
+<img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop" alt="YouTube video editing project">
+<span class="project-tag" data-i18n="projectTag2">YouTube Edit</span>
+<div class="project-meta">
+<span data-i18n="projectName2">Tech video package</span>
+<span class="project-budget">Rs.8,000</span>
+</div>
+<p data-i18n="projectText2">Long-form YouTube edit with intro, b-roll, motion text and thumbnail support.</p>
+</div>
+
+<div class="project-card">
+<img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop" alt="Business video project">
+<span class="project-tag" data-i18n="projectTag3">Business Content</span>
+<div class="project-meta">
+<span data-i18n="projectName3">Ad creative bundle</span>
+<span class="project-budget">Rs.12,000</span>
+</div>
+<p data-i18n="projectText3">Multiple ad versions for social platforms with fast review and delivery.</p>
+</div>
+</div>
+</section>
+
+<section class="signup-fee">
+<h2 data-i18n="feeTitle">Free Signup. Earn From Verified Projects.</h2>
+<p class="signup-copy" data-i18n="feeText">
+Flash Edit keeps signup free so editors and clients can join easily. Our small platform fee and editor commission support payment verification, admin approval, project tracking and safer collaboration for both sides.
+</p>
+<div class="fee-grid">
+<div class="fee-card">
+<strong>Rs.0</strong>
+<h3 data-i18n="feeCard1Title">Free Signup</h3>
+<p data-i18n="feeCard1Text">Create your account and explore the workflow without paying to join.</p>
+</div>
+
+<div class="fee-card featured">
+<strong>Rs.99</strong>
+<h3 data-i18n="feeCard2Title">Client Listing Fee</h3>
+<p data-i18n="feeCard2Text">Clients pay a small listing fee so projects are serious, verified and ready for editors.</p>
+</div>
+
+<div class="fee-card">
+<strong>10%</strong>
+<h3 data-i18n="feeCard3Title">Editor Commission</h3>
+<p data-i18n="feeCard3Text">Editors pay commission only when requesting paid project access, helping us keep approvals, payments and support running.</p>
+</div>
+</div>
+<div class="signup-cta">
+<a href="signup.html" class="btn start-btn" data-i18n="signupFree">Sign Up Free</a>
+</div>
+</section>
+</main>
+
+<footer>
+<h2>Flash Edit</h2>
+<p data-i18n="footerText">India's modern editing marketplace.</p>
+</footer>
+
+<script>
+const translations = {
+en:{
+languageTitle:"Choose Your Language",
+languageText:"Select Telugu or English to understand Flash Edit easily.",
+search:"Search",
+login:"Login",
+getStarted:"Get Started",
+heroTitle:"India's Creator Editing <strong>Marketplace</strong>",
+heroText:"Connect clients and professional editors in one powerful platform.",
+freeSignup:"Free Sign Up",
+hireEditors:"Hire Editors",
+whyTitle:"Why Flash Edit?",
+benefitEditorsTitle:"Professional Video Editors",
+benefitEditorsText:"Find cinematic editors for reels, YouTube, ads, weddings and short films.",
+benefitSecureTitle:"Secure Marketplace",
+benefitSecureText:"Admin approval and payment verification keep project handling organized.",
+benefitChatTitle:"Live Chat Collaboration",
+benefitChatText:"Clients and editors collaborate through real-time chat and drive sharing.",
+editorsTitle:"For Editors",
+editorsText:"Get high-paying editing projects from creators, businesses and influencers.",
+editorPoint1:"Free signup to explore available client projects",
+editorPoint2:"Unlimited editing projects",
+editorPoint3:"Payment verified clients",
+editorPoint4:"Secure project workflow",
+editorPoint5:"Real-time project management",
+signupFree:"Sign Up Free",
+clientsTitle:"For Clients",
+clientsText:"Hire talented editors for reels, YouTube videos, ads, podcasts and social content.",
+clientPoint1:"Verified editors",
+clientPoint2:"Fast project delivery",
+clientPoint3:"Secure admin workflow",
+clientPoint4:"Direct project collaboration",
+projectsTitle:"Client Projects Waiting For Editors",
+projectTag1:"Reels Editing",
+projectName1:"Cinematic brand reel",
+projectText1:"Color grading, sharp cuts, captions and music sync for a creator campaign.",
+projectTag2:"YouTube Edit",
+projectName2:"Tech video package",
+projectText2:"Long-form YouTube edit with intro, b-roll, motion text and thumbnail support.",
+projectTag3:"Business Content",
+projectName3:"Ad creative bundle",
+projectText3:"Multiple ad versions for social platforms with fast review and delivery.",
+feeTitle:"Free Signup. Earn From Verified Projects.",
+feeText:"Flash Edit keeps signup free so editors and clients can join easily. Our small platform fee and editor commission support payment verification, admin approval, project tracking and safer collaboration for both sides.",
+feeCard1Title:"Free Signup",
+feeCard1Text:"Create your account and explore the workflow without paying to join.",
+feeCard2Title:"Client Listing Fee",
+feeCard2Text:"Clients pay a small listing fee so projects are serious, verified and ready for editors.",
+feeCard3Title:"Editor Commission",
+feeCard3Text:"Editors pay commission only when requesting paid project access, helping us keep approvals, payments and support running.",
+footerText:"India's modern editing marketplace."
+},
+te:{
+languageTitle:"మీ భాషను ఎంచుకోండి",
+languageText:"Flash Edit ను సులభంగా అర్థం చేసుకోవడానికి తెలుగు లేదా English ఎంచుకోండి.",
+search:"వెతకండి",
+login:"లాగిన్",
+getStarted:"ప్రారంభించండి",
+heroTitle:"భారత క్రియేటర్ల కోసం <strong>ఎడిటింగ్ మార్కెట్‌ప్లేస్</strong>",
+heroText:"క్లయింట్లు మరియు ప్రొఫెషనల్ ఎడిటర్లను ఒకే ప్లాట్‌ఫారమ్‌లో కలుపుతాము.",
+freeSignup:"ఉచితంగా సైన్ అప్",
+hireEditors:"ఎడిటర్లను నియమించండి",
+whyTitle:"Flash Edit ఎందుకు?",
+benefitEditorsTitle:"ప్రొఫెషనల్ వీడియో ఎడిటర్లు",
+benefitEditorsText:"రీల్స్, YouTube, ads, weddings మరియు short films కోసం మంచి ఎడిటర్లను కనుగొనండి.",
+benefitSecureTitle:"సురక్షిత మార్కెట్‌ప్లేస్",
+benefitSecureText:"అడ్మిన్ అప్రూవల్ మరియు పేమెంట్ వెరిఫికేషన్ వల్ల ప్రాజెక్టులు సురక్షితంగా ఉంటాయి.",
+benefitChatTitle:"లైవ్ చాట్ సహకారం",
+benefitChatText:"క్లయింట్లు మరియు ఎడిటర్లు real-time chat మరియు drive sharing ద్వారా కలిసి పని చేస్తారు.",
+editorsTitle:"ఎడిటర్ల కోసం",
+editorsText:"క్రియేటర్లు, బిజినెస్‌లు మరియు influencers నుండి మంచి పేమెంట్ ఉన్న editing projects పొందండి.",
+editorPoint1:"క్లయింట్ ప్రాజెక్టులను చూడటానికి ఉచిత సైన్ అప్",
+editorPoint2:"అనేక editing projects",
+editorPoint3:"పేమెంట్ వెరిఫై అయిన క్లయింట్లు",
+editorPoint4:"సురక్షిత project workflow",
+editorPoint5:"Real-time project management",
+signupFree:"ఉచితంగా సైన్ అప్",
+clientsTitle:"క్లయింట్ల కోసం",
+clientsText:"రీల్స్, YouTube videos, ads, podcasts మరియు social content కోసం talented editors ను hire చేయండి.",
+clientPoint1:"వెరిఫైడ్ ఎడిటర్లు",
+clientPoint2:"త్వరిత project delivery",
+clientPoint3:"సురక్షిత admin workflow",
+clientPoint4:"Direct project collaboration",
+projectsTitle:"ఎడిటర్ల కోసం సిద్ధంగా ఉన్న క్లయింట్ ప్రాజెక్టులు",
+projectTag1:"Reels Editing",
+projectName1:"Cinematic brand reel",
+projectText1:"Creator campaign కోసం color grading, sharp cuts, captions మరియు music sync.",
+projectTag2:"YouTube Edit",
+projectName2:"Tech video package",
+projectText2:"Intro, b-roll, motion text మరియు thumbnail support తో long-form YouTube edit.",
+projectTag3:"Business Content",
+projectName3:"Ad creative bundle",
+projectText3:"Social platforms కోసం multiple ad versions, fast review మరియు delivery.",
+feeTitle:"ఉచిత సైన్ అప్. వెరిఫైడ్ ప్రాజెక్టుల ద్వారా సంపాదించండి.",
+feeText:"Flash Edit లో signup free. చిన్న platform fee మరియు editor commission వల్ల payment verification, admin approval, project tracking మరియు safer collaboration అందిస్తాము.",
+feeCard1Title:"ఉచిత సైన్ అప్",
+feeCard1Text:"డబ్బు చెల్లించకుండా account create చేసి workflow చూడండి.",
+feeCard2Title:"క్లయింట్ లిస్టింగ్ ఫీ",
+feeCard2Text:"క్లయింట్లు Rs.99 listing fee చెల్లిస్తారు, అందువల్ల projects serious గా మరియు editors కు ready గా ఉంటాయి.",
+feeCard3Title:"ఎడిటర్ కమిషన్",
+feeCard3Text:"Paid project access request చేసినప్పుడు మాత్రమే editors 10% commission చెల్లిస్తారు. ఇది approvals, payments మరియు support కోసం ఉపయోగపడుతుంది.",
+footerText:"భారతదేశం కోసం ఆధునిక editing marketplace."
+}
+};
+
+const languageModal = document.getElementById("languageModal");
+const languageButtons = document.querySelectorAll(".language-btn");
+const savedLanguage = localStorage.getItem("flashEditLanguage");
+let currentLanguage = savedLanguage || "en";
+
+function setLanguage(language){
+currentLanguage = language;
+document.documentElement.lang = language === "te" ? "te" : "en";
+localStorage.setItem("flashEditLanguage", language);
+
+document.querySelectorAll("[data-i18n]").forEach((element)=>{
+const key = element.dataset.i18n;
+element.textContent = translations[language][key] || translations.en[key] || element.textContent;
+});
+
+document.querySelectorAll("[data-i18n-html]").forEach((element)=>{
+const key = element.dataset.i18nHtml;
+element.innerHTML = translations[language][key] || translations.en[key] || element.innerHTML;
+});
+
+document.querySelectorAll("[data-placeholder-en]").forEach((element)=>{
+element.placeholder = language === "te" ? element.dataset.placeholderTe : element.dataset.placeholderEn;
+});
+
+languageButtons.forEach((button)=>{
+button.classList.toggle("active", button.dataset.lang === language);
+});
+}
+
+languageButtons.forEach((button)=>{
+button.addEventListener("click",()=>{
+setLanguage(button.dataset.lang);
+languageModal.classList.remove("active");
+languageModal.setAttribute("aria-hidden","true");
+});
+});
+
+setLanguage(currentLanguage);
+
+if(!savedLanguage){
+setTimeout(()=>{
+languageModal.classList.add("active");
+languageModal.setAttribute("aria-hidden","false");
+}, 3200);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Flash Edit Admin Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+
+margin:0;
+
+font-family:'Roboto',sans-serif;
+
+background:#0f0f0f;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+height:100vh;
+
+color:white;
+
+overflow:hidden;
+
+}
+
+/* BACKGROUND */
+
+.bg{
+
+position:fixed;
+
+inset:0;
+
+background-image:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+
+background-position:center;
+
+filter:blur(10px);
+
+opacity:0.25;
+
+z-index:-1;
+
+}
+
+/* BOX */
+
+.box{
+
+width:400px;
+
+background:#181818;
+
+border:1px solid #272727;
+
+padding:40px;
+
+border-radius:28px;
+
+box-shadow:
+0 0 40px rgba(0,0,0,0.5);
+
+}
+
+/* LOGO */
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:12px;
+
+font-size:32px;
+
+font-weight:900;
+
+margin-bottom:30px;
+
+}
+
+.logo img{
+
+width:45px;
+
+height:45px;
+
+object-fit:contain;
+
+}
+
+/* INPUT */
+
+input{
+
+width:100%;
+
+padding:15px;
+
+margin-top:16px;
+
+background:#121212;
+
+border:1px solid #333;
+
+border-radius:16px;
+
+color:white;
+
+outline:none;
+
+font-size:15px;
+
+}
+
+/* BUTTON */
+
+button{
+
+width:100%;
+
+padding:15px;
+
+margin-top:24px;
+
+background:#ff0000;
+
+border:none;
+
+border-radius:18px;
+
+color:white;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#cc0000;
+
+}
+
+.note{
+
+margin-top:20px;
+
+text-align:center;
+
+color:#aaaaaa;
+
+font-size:14px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<div class="box">
+
+<div class="logo">
+
+<img
+src="images/logo.png">
+
+Flash Edit Admin
+
+</div>
+
+<input
+type="email"
+id="email"
+placeholder="Admin Email">
+
+<input
+type="password"
+id="password"
+placeholder="Admin Password">
+
+<button id="adminLogin">
+
+Login As Admin
+
+</button>
+
+<div class="note">
+
+Only admin accounts can access dashboard
+
+</div>
+
+</div>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import {
+
+getAuth,
+signInWithEmailAndPassword
+
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+import {
+
+getFirestore,
+doc,
+getDoc
+
+}
+from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+/* FIREBASE */
+
+const firebaseConfig = {
+
+apiKey: "AIzaSyBNBmJcZ8qLYbVKTOrd5VgxKeRq0WRGlRs",
+
+authDomain: "flash-edit.firebaseapp.com",
+
+projectId: "flash-edit",
+
+storageBucket: "flash-edit.firebasestorage.app",
+
+messagingSenderId: "568937013589",
+
+appId: "1:568937013589:web:dd4e2d926e2790b0f88fdc",
+
+measurementId: "G-CBJTZMYKKL"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+/* ADMIN LOGIN */
+
+const adminBtn =
+document.getElementById("adminLogin");
+
+adminBtn.addEventListener("click",async()=>{
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+if(email === "" || password === ""){
+
+alert("Fill all fields");
+
+return;
+
+}
+
+try{
+
+const userCredential =
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+const user = userCredential.user;
+
+/* CHECK ROLE */
+
+const userDoc =
+await getDoc(
+doc(db,"users",user.uid)
+);
+
+if(userDoc.exists()){
+
+const data = userDoc.data();
+
+if(data.role === "admin"){
+
+window.location.href =
+"admin-dashboard.html";
+
+}else{
+
+alert("Access Denied");
+
+}
+
+}else{
+
+alert("No admin role found");
+
+}
+
+}catch(error){
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

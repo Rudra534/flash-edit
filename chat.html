@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Flash Edit</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+
+--bg:#0f0f0f;
+--card:#181818;
+--border:#272727;
+--accent:#ff0000;
+--text:#ffffff;
+--sub:#aaaaaa;
+
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+scroll-behavior:smooth;
+}
+
+body{
+
+font-family:'Roboto',sans-serif;
+background:var(--bg);
+color:white;
+overflow-x:hidden;
+
+}
+
+/* NAVBAR */
+
+.navbar{
+
+height:80px;
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+padding:0 40px;
+
+background:rgba(0,0,0,0.7);
+
+backdrop-filter:blur(10px);
+
+border-bottom:1px solid #222;
+
+position:sticky;
+
+top:0;
+
+z-index:999;
+
+}
+
+/* LOGO */
+
+.logo{
+
+display:flex;
+align-items:center;
+gap:14px;
+
+font-size:34px;
+font-weight:900;
+
+}
+
+.logo img{
+
+width:48px;
+height:48px;
+object-fit:contain;
+
+}
+
+/* NAV BUTTONS */
+
+.nav-buttons{
+
+display:flex;
+gap:16px;
+
+}
+
+.nav-buttons a{
+text-decoration:none;
+}
+
+/* BUTTON */
+
+.btn{
+
+padding:15px 28px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+transition:0.3s;
+
+}
+
+/* LOGIN */
+
+.login-btn{
+
+background:#181818;
+color:white;
+border:1px solid #333;
+
+}
+
+.login-btn:hover{
+
+background:#222;
+
+}
+
+/* START */
+
+.start-btn{
+
+background:#ff0000;
+color:white;
+
+box-shadow:
+0 0 25px rgba(255,0,0,0.45);
+
+}
+
+.start-btn:hover{
+
+transform:translateY(-3px);
+
+background:#d90000;
+
+}
+
+/* HERO */
+
+.hero{
+
+min-height:100vh;
+
+display:flex;
+align-items:center;
+justify-content:center;
+
+padding:60px;
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+/* BG IMAGE */
+
+.hero::before{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background-image:
+url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1600&auto=format&fit=crop');
+
+background-size:cover;
+background-position:center;
+
+filter:brightness(0.3);
+
+z-index:-2;
+
+}
+
+/* OVERLAY */
+
+.hero::after{
+
+content:"";
+
+position:absolute;
+inset:0;
+
+background:
+linear-gradient(
+180deg,
+rgba(0,0,0,0.4),
+rgba(0,0,0,0.9)
+);
+
+z-index:-1;
+
+}
+
+/* HERO CONTENT */
+
+.hero-content{
+
+max-width:900px;
+
+text-align:center;
+
+animation:fadeUp 1s ease;
+
+}
+
+.hero-content h1{
+
+font-size:78px;
+font-weight:900;
+line-height:1.1;
+
+margin-bottom:24px;
+
+text-shadow:
+0 0 30px rgba(255,0,0,0.3);
+
+}
+
+.hero-content p{
+
+font-size:22px;
+line-height:1.8;
+color:#ddd;
+
+margin-bottom:40px;
+
+}
+
+/* HERO BUTTONS */
+
+.hero-buttons{
+
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+
+}
+
+/* FEATURES */
+
+.features{
+
+padding:90px 30px;
+
+display:grid;
+
+grid-template-columns:
+repeat(auto-fit,minmax(300px,1fr));
+
+gap:28px;
+
+}
+
+/* CARD */
+
+.card{
+
+background:rgba(255,255,255,0.03);
+
+backdrop-filter:blur(14px);
+
+border:1px solid rgba(255,255,255,0.06);
+
+padding:35px;
+
+border-radius:30px;
+
+transition:0.3s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+border-color:#ff0000;
+
+box-shadow:
+0 0 40px rgba(255,0,0,0.12);
+
+}
+
+.card h2{
+
+font-size:30px;
+
+margin-bottom:16px;
+
+}
+
+.card p{
+
+line-height:1.8;
+color:#ccc;
+
+}
+
+/* FOOTER */
+
+.footer{
+
+padding:40px;
+
+text-align:center;
+
+color:#888;
+
+border-top:1px solid #222;
+
+}
+
+/* ANIMATION */
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+transform:translateY(0);
+
+}
+
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.navbar{
+
+padding:0 20px;
+
+}
+
+.logo{
+
+font-size:26px;
+
+}
+
+.logo img{
+
+width:40px;
+height:40px;
+
+}
+
+.hero-content h1{
+
+font-size:52px;
+
+}
+
+.hero-content p{
+
+font-size:18px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<div class="logo">
+
+<img src="images/logo.png">
+
+Flash Edit
+
+</div>
+
+<div class="nav-buttons">
+
+<a href="login.html">
+
+<button class="btn login-btn">
+
+Login
+
+</button>
+
+</a>
+
+<a href="signup.html">
+
+<button class="btn start-btn">
+
+Start Creating 🚀
+
+</button>
+
+</a>
+
+</div>
+
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+
+Create Viral Content
+With Flash Edit ⚡
+
+</h1>
+
+<p>
+
+Professional video editing workflow platform
+for creators, influencers, YouTubers,
+business brands and editing agencies.
+
+Realtime collaboration.
+Project management.
+Premium creator experience.
+
+</p>
+
+<div class="hero-buttons">
+
+<a href="signup.html">
+
+<button class="btn start-btn">
+
+Start Creating 🚀
+
+</button>
+
+</a>
+
+<a href="pricing.html">
+
+<button class="btn login-btn">
+
+View Pricing
+
+</button>
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FEATURES -->
+
+<section class="features">
+
+<div class="card">
+
+<h2>
+
+🎬 Pro Editing Workflow
+
+</h2>
+
+<p>
+
+Manage projects professionally with
+clients, editors and admin dashboards.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+
+💬 Live Realtime Chat
+
+</h2>
+
+<p>
+
+Project-based realtime communication
+between clients and editors.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<h2>
+
+⚡ Fast Creator System
+
+</h2>
+
+<p>
+
+Track revisions, updates, statuses and
+deliver projects faster than ever.
+
+</p>
+
+</div>
+
+</section>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+
+© 2026 Flash Edit. All rights reserved.
+
+</footer>
+
+</body>
+
+</html>
